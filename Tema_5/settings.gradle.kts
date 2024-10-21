@@ -19,7 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Ej5-2"
-include(":app")
+rootProject.name = "Botones_Cuadrados"
 include(":app")
  
