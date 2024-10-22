@@ -20,23 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Obtener referencia al EditText
         EditText editText = findViewById(R.id.editText);
+        EditText editText2 = findViewById(R.id.editText2);
+        EditText editText3 = findViewById(R.id.editText3);
+        EditText editText4 = findViewById(R.id.editText4);
 
         // Cambiar el tipo de teclado para texto normal
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        // Ejemplo de otros tipos de teclado:
-
         // Teclado para números
-        // editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         // Teclado para números decimales
-        // editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editText3.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         // Teclado para números de teléfono
-        // editText.setInputType(InputType.TYPE_CLASS_PHONE);
-
-        // Teclado para correo electrónico
-        // editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        editText4.setInputType(InputType.TYPE_CLASS_PHONE);
 
         // Configurar insets para el ajuste del layout con los bordes del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
