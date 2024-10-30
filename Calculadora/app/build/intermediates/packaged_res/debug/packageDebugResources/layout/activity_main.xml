@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:columnCount="4"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/visor"
+        android:layout_width="wrap_content"
+        android:layout_columnSpan="4"
+        android:hint="@string/visor" />
+
+    <Button
+        android:text="/"
+        android:onClick="division"
+        />
+
+    <Button android:text="1"
+        android:onClick="uno"
+        />
+
+    <Button android:text="2"
+        android:onClick="dos"/>
+
+    <Button android:text="3"
+        android:onClick="tres"/>
+
+    <Button android:text="*"
+        android:onClick="multiplicacion"
+        />
+
+    <Button android:text="4"
+        android:onClick="cuatro"/>
+
+    <Button android:text="5"
+        android:onClick="cinco"/>
+
+    <Button android:text="6"
+        android:onClick="seis"/>
+
+    <Button android:text="-"
+        android:onClick="resta"/>
+
+    <Button android:text="7"
+        android:onClick="siete"/>
+
+    <Button android:text="8"
+        android:onClick="ocho"/>
+
+    <Button android:text="9"
+        android:onClick="nueve"/>
+
+    <Button android:text="^"
+        android:onClick="potencia"
+        />
+
+    <Button android:text="."
+        android:onClick="decimal"
+        />
+
+    <Button
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:text="0"
+        android:onClick="cero"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:text="+"
+        android:onClick="suma"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:text="borrar"
+        android:onClick="borrar"
+        />
+
+    <Button
+        android:layout_columnSpan="2"
+        android:layout_gravity="fill"
+        android:text="="
+        android:onClick="igual"
+        />
+
+</GridLayout>

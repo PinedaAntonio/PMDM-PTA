@@ -1,19 +1,372 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <TextView
+    <!-- res/layout/activity_main.xml -->
+    <GridLayout
+        android:id="@+id/attempts_container"
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
+        android:layout_margin="8dp"
+        android:background="#FFFFFF"
+        android:columnCount="5"
+        android:gravity="center"
+        android:rowCount="6">
+
+        <!-- Fila 1 -->
+        <TextView
+            android:id="@+id/textView_0_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_0_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_0_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_0_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_0_4"
+            style="@style/WordleTextView" />
+
+        <!-- Fila 2 -->
+        <TextView
+            android:id="@+id/textView_1_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_1_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_1_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_1_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_1_4"
+            style="@style/WordleTextView" />
+
+        <!-- Fila 3 -->
+        <TextView
+            android:id="@+id/textView_2_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_2_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_2_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_2_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_2_4"
+            style="@style/WordleTextView" />
+
+        <!-- Fila 4 -->
+        <TextView
+            android:id="@+id/textView_3_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_3_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_3_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_3_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_3_4"
+            style="@style/WordleTextView" />
+
+        <!-- Fila 5 -->
+        <TextView
+            android:id="@+id/textView_4_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_4_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_4_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_4_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_4_4"
+            style="@style/WordleTextView" />
+
+        <!-- Fila 6 -->
+        <TextView
+            android:id="@+id/textView_5_0"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_5_1"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_5_2"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_5_3"
+            style="@style/WordleTextView" />
+
+        <TextView
+            android:id="@+id/textView_5_4"
+            style="@style/WordleTextView" />
+
+        <!-- Continúa así hasta tener las 6 filas de 5 TextViews cada una -->
+
+    </GridLayout>
+
+
+    <GridLayout
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="6"
+        android:padding="16dp">
+
+        <!-- Fila 1 -->
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_q"
+            android:text="Q"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_w"
+            android:text="W"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_e"
+            android:text="E"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_r"
+            android:text="R"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_t"
+            android:text="T"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_y"
+            android:text="Y"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_u"
+            android:text="U"
+            app:cornerRadius="10dp" />
+
+
+        <!-- Fila 2 -->
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_i"
+            android:text="I"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_o"
+            android:text="O"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_p"
+            android:text="P"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_a"
+            android:text="A"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_s"
+            android:text="S"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_d"
+            android:text="D"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_f"
+            android:text="F"
+            app:cornerRadius="10dp" />
+
+
+        <!-- Fila 3 -->
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_g"
+            android:text="G"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_h"
+            android:text="H"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_j"
+            android:text="J"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_k"
+            android:text="K"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_l"
+            android:text="L"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_z"
+            android:text="Z"
+            app:cornerRadius="10dp" />
+
+
+        <!-- Fila 4 -->
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_x"
+            android:text="X"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_c"
+            android:text="C"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_v"
+            android:text="V"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_b"
+            android:text="B"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_n"
+            android:text="N"
+            app:cornerRadius="10dp" />
+
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_m"
+            android:text="M"
+            app:cornerRadius="10dp" />
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_send"
+            android:layout_columnSpan="2"
+            android:layout_width="95dp"
+            android:text="Enter"
+            app:cornerRadius="10dp" />
+        <Button
+            style="@style/keyboardButtonStyle"
+            android:backgroundTint="@color/md_grey_800"
+            android:id="@+id/bt_clear"
+            android:layout_columnSpan="2"
+            android:layout_width="95dp"
+            android:text="Limpiar"
+            app:cornerRadius="10dp" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Reiniciar"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+</LinearLayout>
