@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         listaVideojuegos = new ArrayList<>();
         listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789"));
         listaVideojuegos.add(new Videojuego("Cyberpunk 2077", "Juego de rol de acción y aventura", R.drawable.cyberpunk, false, 3.5f, "https://cyberpunk.net", "987654321"));
-        listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://cyberpunk.net", "627162399"));
+        listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://smashultimate", "627162399"));
+        listaVideojuegos.add(new Videojuego("Sparking Zero", "Juego de peleas de Dragon Ball", R.drawable.sparking, true, 4f, "https://cyberpunk.net", "637253126"));
 
         adapter = new VideojuegoAdapter(listaVideojuegos);
         recyclerView.setAdapter(adapter);
