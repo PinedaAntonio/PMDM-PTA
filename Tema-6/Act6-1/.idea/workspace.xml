@@ -17,9 +17,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cc1941c-a892-4619-8fb8-64d405b0f69c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema-5/Act5-1/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Tema_5/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema_5/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +40,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2o6RKvYB7yLrkSOMCwz4wk2SkOu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -58,7 +57,9 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/usuario/Escritorio/GitHub/PMDM-PTA/Tema_5",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
   <component name="RunManager">

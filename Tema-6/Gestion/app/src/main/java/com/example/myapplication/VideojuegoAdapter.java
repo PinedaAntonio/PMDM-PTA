@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -31,7 +32,14 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
         holder.tvNombre.setText(videojuego.getNombre());
         holder.tvDescripcion.setText(videojuego.getDescripcion());
         holder.ratingBar.setRating(videojuego.getValoracion());
-        holder.imgPortada.setImageResource(videojuego.getPortadaResId()); // Asigna la imagen
+        holder.imgPortada.setImageResource(videojuego.getPortadaResId());
+        holder.tvTelefono.setText(videojuego.getTelefono());
+        holder.tvWeb.setText(videojuego.getWeb());
+        holder.tvJugado.setChecked(videojuego.getJugado());
+        holder.tvJugado.setOnClickListener(v -> {
+            boolean isChecked = holder.tvJugado.isChecked();
+            videojuego.setJugado(isChecked);
+        });
     }
 
     @Override
@@ -44,13 +52,19 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
         TextView tvDescripcion;
         RatingBar ratingBar;
         ImageView imgPortada;
+        TextView tvTelefono;
+        TextView tvWeb;
+        RadioButton tvJugado;
 
         VideojuegoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             ratingBar = itemView.findViewById(R.id.ratingBar);
-            imgPortada = itemView.findViewById(R.id.imgPortada); // Referencia a la imagen
+            imgPortada = itemView.findViewById(R.id.imgPortada);
+            tvTelefono = itemView.findViewById(R.id.tvTelefono);
+            tvWeb = itemView.findViewById(R.id.tvWeb);
+            tvJugado = itemView.findViewById(R.id.tvJugado);
         }
     }
 }
