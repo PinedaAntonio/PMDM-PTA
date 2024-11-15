@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,5 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new VideojuegoAdapter(listaVideojuegos);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void createVideojuego(View view){
+        Intent intent = new Intent(this, CreateVideojuego.class);
+        startActivity(intent);
     }
 }

@@ -18,5 +18,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:text="Agregar videojuego" />
+        android:text="Agregar videojuego"
+        android:onClick="createVideojuego"/>
 </RelativeLayout>
