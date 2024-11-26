@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
         // Crear lista de videojuegos
         listaVideojuegos = new ArrayList<>();
         listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789"));
@@ -59,4 +61,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         return true;
     }
+
+
 }
