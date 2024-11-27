@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,19 +49,35 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.sort_by_name) {
-            // Ordenar por nombre
             listaVideojuegos.sort((v1, v2) -> v1.getNombre().compareToIgnoreCase(v2.getNombre()));
         } else if (itemId == R.id.sort_by_rating) {
-            // Ordenar por valoración
             listaVideojuegos.sort((v1, v2) -> Float.compare(v2.getValoracion(), v1.getValoracion()));
+        } else if (itemId == R.id.create_videojuego) {
+            Intent intent = new Intent(this, CreateVideojuego.class);
+            startActivityForResult(intent, 1);
+            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
 
-        // Notificar al adaptador de los cambios
         adapter.notifyDataSetChanged();
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Obtener el objeto Videojuego del Intent
+            Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
+
+            // Agregar el nuevo videojuego a la lista
+            if (nuevoVideojuego != null) {
+                listaVideojuegos.add(nuevoVideojuego);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
 }

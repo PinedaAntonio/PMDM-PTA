@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/sort_by_name"
-        android:title="Ordenar por Nombre" />
+        android:title="Ordenar por nombre" />
     <item
         android:id="@+id/sort_by_rating"
-        android:title="Ordenar por Valoración" />
+        android:title="Ordenar por valoración" />
+    <item
+        android:id="@+id/create_videojuego"
+        android:title="Crear Videojuego" />
 </menu>
