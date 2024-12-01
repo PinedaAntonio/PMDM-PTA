@@ -4,6 +4,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/imgPortada"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp" />
     <EditText
         android:id="@+id/editNombre"
         android:layout_width="match_parent"

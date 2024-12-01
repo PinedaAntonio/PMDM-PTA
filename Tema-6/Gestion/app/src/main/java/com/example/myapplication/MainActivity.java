@@ -2,8 +2,12 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://smashultimate", "627162399"));
         listaVideojuegos.add(new Videojuego("Sparking Zero", "Juego de peleas de Dragon Ball", R.drawable.sparking, true, 4f, "https://cyberpunk.net", "637253126"));
 
-        adapter = new VideojuegoAdapter(listaVideojuegos);
+        adapter = new VideojuegoAdapter(listaVideojuegos, this::onItemLongClick);
         recyclerView.setAdapter(adapter);
     }
 
@@ -64,20 +68,83 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void onItemLongClick(int position) {
+        selectedItemPosition = position;
+        registerForContextMenu(recyclerView); // Registra el RecyclerView
+        recyclerView.showContextMenu(); // Muestra el menú contextual
+    }
+
+    private int selectedItemPosition;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_contextual, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit_videojuego) {
+            editVideojuego(selectedItemPosition);
+            return true;
+        } else if (item.getItemId() == R.id.delete_videojuego) {
+            confirmDeleteVideojuego(selectedItemPosition);
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void confirmDeleteVideojuego(int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar Videojuego")
+                .setMessage("¿Estás seguro de que deseas eliminar este videojuego?")
+                .setPositiveButton("Eliminar", (dialog, which) -> {
+                    listaVideojuegos.remove(position);
+                    adapter.notifyItemRemoved(position);
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void editVideojuego(int position) {
+        Videojuego videojuego = listaVideojuegos.get(position);
+
+        // Crear un Intent para pasar el videojuego a la actividad de edición
+        Intent intent = new Intent(this, CreateVideojuego.class);
+
+        // Pasa el objeto Videojuego y la posición a la actividad de edición
+        intent.putExtra("videojuego", videojuego);
+        intent.putExtra("position", position);
+
+        // Pasa la imagen del videojuego
+        intent.putExtra("portadaResId", videojuego.getPortadaResId());
+
+        startActivityForResult(intent, 2); // Código de solicitud para editar
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Obtener el objeto Videojuego del Intent
-            Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
-
-            // Agregar el nuevo videojuego a la lista
-            if (nuevoVideojuego != null) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                // Nuevo videojuego
+                Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
                 listaVideojuegos.add(nuevoVideojuego);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemInserted(listaVideojuegos.size() - 1);
+            } else if (requestCode == 2) {
+                // Videojuego editado
+                int position = data.getIntExtra("position", -1);
+                if (position >= 0) {
+                    Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");
+                    listaVideojuegos.set(position, videojuegoEditado);
+                    adapter.notifyItemChanged(position);
+                }
             }
         }
     }
 
+
 }
+

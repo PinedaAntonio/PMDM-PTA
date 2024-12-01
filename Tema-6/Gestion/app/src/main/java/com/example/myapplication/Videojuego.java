@@ -6,7 +6,7 @@ public class Videojuego implements Serializable {
     private static final long serialVersionUID = 1L;
     public String nombre;
     public String descripcion;
-    public int portadaResId; // ID del recurso de la imagen (en lugar de una URL o Image)
+    public int portadaResId;
     public boolean jugado;
     public float valoracion;
     public String web;

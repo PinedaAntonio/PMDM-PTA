@@ -2,14 +2,14 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.myapplication.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,14 +29,31 @@ public class LoginActivity extends AppCompatActivity {
                 String password = contraseña.getText().toString();
 
                 if (username.equals("usuario") && password.equals("usuario")) {
-                    Toast.makeText(LoginActivity.this, "Usuario y contraseña correctos, iniciando...", Toast.LENGTH_SHORT).show();
+                    showCustomToast("Usuario y contraseña correctos, iniciando...");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Usuario o contraseña erróneos", Toast.LENGTH_SHORT).show();
+                    showCustomToast("Usuario o contraseña erróneos");
                 }
             }
         });
+    }
+
+    // Método para mostrar el Toast personalizado
+    private void showCustomToast(String message) {
+        // Inflar el layout personalizado
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, null); // Usamos null como contenedor
+
+        // Configurar el texto del Toast
+        TextView text = layout.findViewById(R.id.toast_message);
+        text.setText(message);
+
+        // Crear el Toast personalizado
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 }
