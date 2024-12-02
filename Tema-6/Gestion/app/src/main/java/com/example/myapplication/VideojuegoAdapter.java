@@ -38,7 +38,6 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
         holder.tvDescripcion.setText(videojuego.getDescripcion());
         holder.imgPortada.setImageResource(videojuego.getPortadaResId());
 
-        // Configurar long click para mostrar menú contextual
         holder.itemView.setOnLongClickListener(v -> {
             longClickListener.onItemLongClick(holder.getAdapterPosition());
             return true;

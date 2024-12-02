@@ -42,15 +42,12 @@ public class LoginActivity extends AppCompatActivity {
 
     // Método para mostrar el Toast personalizado
     private void showCustomToast(String message) {
-        // Inflar el layout personalizado
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast, null); // Usamos null como contenedor
+        View layout = inflater.inflate(R.layout.custom_toast, null);
 
-        // Configurar el texto del Toast
         TextView text = layout.findViewById(R.id.toast_message);
         text.setText(message);
 
-        // Crear el Toast personalizado
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
