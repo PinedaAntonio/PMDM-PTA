@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_videojuego">Ajouter un jeu vidéo</string>
+    <string name="app_name">Gestion de jeux vidéo</string>
+    <string name="jugado">Jeu vidéo joué</string>
+    <string name="delete_video_game">Supprimer le jeu vidéo</string>
+    <string name="edit_video_game">Modifier le jeu vidéo</string>
+    <string name="confirm_delete">Êtes-vous sûr de vouloir supprimer ce jeu vidéo ?</string>
+    <string name="delete">Éliminer</string>
+    <string name="cancel">Annuler</string>
+    <string name="name">Nom d\'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="inicio">Se connecter</string>
+    <string name="inicio_true">Le nom d\'utilisateur et le mot de passe sont corrects, en commeçant...</string>
+    <string name="inicio_false">Le nom d\'utilisateur ou le mot de passe sont incorrect</string>
+    <string name="nombre_v">Nom de jeu vidéo</string>
+    <string name="desc">Description</string>
+    <string name="url"> Url de jeu vidéo</string>
+    <string name="tel">Téléphone de contact</string>
+    <string name="date">Date de départ</string>
+    <string name="voice_button_description">Bouton de reconnaissance vocale</string>
+    <string name="voice_prompt">Parlez maintenant pour ajouter ou rechercher un jeu</string>
+    <string name="image">Ajouter une image</string>
+</resources>

@@ -11,33 +11,34 @@
         android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp" />
+
     <EditText
         android:id="@+id/editNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del videojuego" />
+        android:hint="@string/nombre_v" />
 
     <EditText
         android:id="@+id/editDescripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripción" />
+        android:hint="@string/desc" />
 
     <EditText
         android:id="@+id/editUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="URL del videojuego" />
+        android:hint="@string/url" />
 
     <EditText
         android:id="@+id/editTelefono"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Teléfono de contacto" />
+        android:hint="@string/tel" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha de lanzamiento:"
+        android:text="@string/date"
         android:textSize="16sp"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="8dp" />
@@ -59,5 +60,5 @@
         android:id="@+id/btnCrear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crear Videojuego" />
+        android:text="@string/add_videojuego" />
 </LinearLayout>

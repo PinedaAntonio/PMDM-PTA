@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Videojuego implements Serializable {
@@ -11,7 +13,7 @@ public class Videojuego implements Serializable {
     private float valoracion;
     private String web;
     private String telefono;
-    private String fechaLanzamiento; // Nuevo atributo
+    private String fechaLanzamiento;
 
     public Videojuego(String nombre, String descripcion, int portadaResId, boolean jugado, float valoracion, String web, String telefono, String fechaLanzamiento) {
         this.nombre = nombre;
@@ -23,6 +25,7 @@ public class Videojuego implements Serializable {
         this.telefono = telefono;
         this.fechaLanzamiento = fechaLanzamiento;
     }
+
 
     public String getNombre() { return nombre; }
     public String getDescripcion() { return descripcion; }

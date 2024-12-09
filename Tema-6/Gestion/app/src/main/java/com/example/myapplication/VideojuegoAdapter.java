@@ -61,4 +61,12 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
             imgPortada = itemView.findViewById(R.id.imgPortada);
         }
     }
+
+    public void updateList(List<Videojuego> newList) {
+
+        videojuegos.clear();
+        videojuegos.addAll(newList);
+        notifyDataSetChanged();
+    }
+
 }

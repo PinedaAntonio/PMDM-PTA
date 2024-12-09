@@ -2,23 +2,31 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private VideojuegoAdapter adapter;
     private List<Videojuego> listaVideojuegos;
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 100;
+    private int selectedItemPosition;
+    private List<Videojuego> original;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         // Crear lista de videojuegos
         listaVideojuegos = new ArrayList<>();
         listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789", "22/10/2012"));
@@ -40,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new VideojuegoAdapter(listaVideojuegos, this::onItemLongClick);
         recyclerView.setAdapter(adapter);
+
+        original = new ArrayList<>();
+        original.addAll(listaVideojuegos);
+
+        // Botón para agregar videojuegos
+        Button btnAdd = findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreateVideojuego.class);
+            startActivityForResult(intent, 1);
+        });
+
+        // Botón para reconocimiento de voz
+        ImageButton btnVoice = findViewById(R.id.btn_voice);
+        btnVoice.setOnClickListener(v -> startVoiceRecognition());
     }
 
     @Override
@@ -74,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.showContextMenu();
     }
 
-    private int selectedItemPosition;
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -96,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void confirmDeleteVideojuego(int position) {
         new AlertDialog.Builder(this)
-                .setTitle("Eliminar Videojuego")
-                .setMessage("¿Estás seguro de que deseas eliminar este videojuego?")
-                .setPositiveButton("Eliminar", (dialog, which) -> {
+                .setTitle(R.string.delete_video_game)
+                .setMessage(R.string.confirm_delete)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
                     listaVideojuegos.remove(position);
                     adapter.notifyItemRemoved(position);
                 })
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
@@ -119,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 2);
     }
 
+    private void startVoiceRecognition() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault()); // Usar el idioma del sistema
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt));
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -128,18 +153,46 @@ public class MainActivity extends AppCompatActivity {
             if (requestCode == 1) {
                 Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
                 listaVideojuegos.add(nuevoVideojuego);
+                original.add(nuevoVideojuego);
                 adapter.notifyItemInserted(listaVideojuegos.size() - 1);
             } else if (requestCode == 2) {
                 int position = data.getIntExtra("position", -1);
                 if (position >= 0) {
                     Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");
                     listaVideojuegos.set(position, videojuegoEditado);
+                    original.set(position, videojuegoEditado);
                     adapter.notifyItemChanged(position);
+                }
+            } else if (requestCode == VOICE_RECOGNITION_REQUEST_CODE) {
+                ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if (matches != null && !matches.isEmpty()) {
+                    processVoiceCommand(matches.get(0));
                 }
             }
         }
     }
 
+    private void processVoiceCommand(String command) {
+        if (command.toLowerCase().contains("buscar")) {
+            String query = command.replace("buscar", "").trim();
+            searchVideojuego(query);
+        } else if (command.toLowerCase().contains("crear")) {
+            Intent intent = new Intent(this, CreateVideojuego.class);
+            startActivityForResult(intent, 1);
+        } else if (command.toLowerCase().contains("lista completa")){
+            adapter.updateList(original);
+        }
+    }
 
+    private void searchVideojuego(String query) {
+        original.clear();
+        List<Videojuego> filteredList = new ArrayList<>();
+        for (Videojuego v : listaVideojuegos) {
+            original.add(v);
+            if (v.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(v);
+            }
+        }
+        adapter.updateList(filteredList);
+    }
 }
-

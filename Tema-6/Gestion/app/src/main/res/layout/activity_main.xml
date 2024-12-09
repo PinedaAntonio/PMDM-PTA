@@ -17,5 +17,23 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:text="Agregar videojuego" />
+        android:text="@string/add_videojuego"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_voice"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="18dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/voice_button_description"
+        android:src="@drawable/baseline_mic_24" />
+
 </RelativeLayout>

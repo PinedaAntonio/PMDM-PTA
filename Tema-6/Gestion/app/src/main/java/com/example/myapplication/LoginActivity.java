@@ -29,28 +29,28 @@ public class LoginActivity extends AppCompatActivity {
                 String password = contraseña.getText().toString();
 
                 if (username.equals("usuario") && password.equals("usuario")) {
-                    showCustomToast("Usuario y contraseña correctos, iniciando...");
+                    showCustomToast(R.string.inicio_true);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    showCustomToast("Usuario o contraseña erróneos");
+                    showCustomToast(R.string.inicio_false);
                 }
             }
         });
     }
 
-    // Método para mostrar el Toast personalizado
-    private void showCustomToast(String message) {
+    private void showCustomToast(int stringResId) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, null);
 
         TextView text = layout.findViewById(R.id.toast_message);
-        text.setText(message);
+        text.setText(getString(stringResId));
 
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }
+
 }

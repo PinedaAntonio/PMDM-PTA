@@ -60,9 +60,9 @@ public class CreateVideojuego extends AppCompatActivity {
             imgPortada.setImageResource(videojuegoAEditar.getPortadaResId());
 
             positionToEdit = intent.getIntExtra("position", -1);
-            btnCrear.setText("Editar Videojuego");
+            btnCrear.setText(R.string.edit_video_game);
         } else {
-            btnCrear.setText("Crear Videojuego");
+            btnCrear.setText(R.string.add_videojuego);
         }
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
@@ -104,4 +104,3 @@ public class CreateVideojuego extends AppCompatActivity {
         });
     }
 }
-

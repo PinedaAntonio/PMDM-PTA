@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_videojuego">Add videogame</string>
+    <string name="app_name">Videogames gestion</string>
+    <string name="jugado">Played videogame</string>
+    <string name="delete_video_game">Delete Video Game</string>
+    <string name="edit_video_game">Edit Video Game</string>
+    <string name="confirm_delete">Are you sure you want to delete this video game?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="name">Username</string>
+    <string name="password">Password</string>
+    <string name="inicio">Login</string>
+    <string name="inicio_true">Correct username and password, starting...</string>
+    <string name="inicio_false">Incorrect username or password</string>
+    <string name="nombre_v">Videogame name</string>
+    <string name="desc">Description</string>
+    <string name="url">Videogame url</string>
+    <string name="tel">Contact phone</string>
+    <string name="date">Release date</string>
+    <string name="voice_button_description">Voice recognition button</string>
+    <string name="voice_prompt">Speak now to add or search for a game</string>
+    <string name="image">Add image</string>
+</resources>
