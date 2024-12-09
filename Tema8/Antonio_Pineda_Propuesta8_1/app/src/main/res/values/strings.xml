@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ToolBar App</string>
+    <string name="cadena_barra_nuevo">AÑADIR</string>
+    <string name="cadena_barra_editar">EDITAR</string>
+    <string name="cadena_barra_configurar">CONFIGURAR</string>
+    <string name="cadena_barra_ayuda">AYUDA</string>
+    <string name="cadena_barra_acerca">ACERCA DE...</string>
+</resources>

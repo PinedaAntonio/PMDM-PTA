@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/barra_nuevo"
+        android:icon="@drawable/nuevo"
+        android:title="@string/cadena_barra_nuevo"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/barra_editar"
+        android:icon="@drawable/editar"
+        android:title="@string/cadena_barra_editar"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/barra_configurar"
+        android:title="@string/cadena_barra_configurar"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/barra_ayuda"
+        android:title="@string/cadena_barra_ayuda"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/barra_acerca"
+        android:title="@string/cadena_barra_acerca"
+        app:showAsAction="never" />
+</menu>
