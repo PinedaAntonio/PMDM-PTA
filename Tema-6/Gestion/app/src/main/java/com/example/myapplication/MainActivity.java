@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Crear lista de videojuegos
         listaVideojuegos = new ArrayList<>();
-        listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789"));
-        listaVideojuegos.add(new Videojuego("Cyberpunk 2077", "Juego de rol de acción y aventura", R.drawable.cyberpunk, false, 3.5f, "https://cyberpunk.net", "987654321"));
-        listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://smashultimate", "627162399"));
-        listaVideojuegos.add(new Videojuego("Sparking Zero", "Juego de peleas de Dragon Ball", R.drawable.sparking, true, 4f, "https://cyberpunk.net", "637253126"));
+        listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789", "22/10/2012"));
+        listaVideojuegos.add(new Videojuego("Cyberpunk 2077", "Juego de rol de acción y aventura", R.drawable.cyberpunk, false, 3.5f, "https://cyberpunk.net", "987654321", "12/07/2022"));
+        listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://smashultimate", "627162399", "14/03/2018"));
+        listaVideojuegos.add(new Videojuego("Sparking Zero", "Juego de peleas de Dragon Ball", R.drawable.sparking, true, 4f, "https://cyberpunk.net", "637253126", "02/08/2024"));
 
         adapter = new VideojuegoAdapter(listaVideojuegos, this::onItemLongClick);
         recyclerView.setAdapter(adapter);
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void onItemLongClick(int position) {
         selectedItemPosition = position;
-        registerForContextMenu(recyclerView); // Registra el RecyclerView
-        recyclerView.showContextMenu(); // Muestra el menú contextual
+        registerForContextMenu(recyclerView);
+        recyclerView.showContextMenu();
     }
 
     private int selectedItemPosition;
@@ -109,17 +109,14 @@ public class MainActivity extends AppCompatActivity {
     private void editVideojuego(int position) {
         Videojuego videojuego = listaVideojuegos.get(position);
 
-        // Crear un Intent para pasar el videojuego a la actividad de edición
         Intent intent = new Intent(this, CreateVideojuego.class);
 
-        // Pasa el objeto Videojuego y la posición a la actividad de edición
         intent.putExtra("videojuego", videojuego);
         intent.putExtra("position", position);
 
-        // Pasa la imagen del videojuego
         intent.putExtra("portadaResId", videojuego.getPortadaResId());
 
-        startActivityForResult(intent, 2); // Código de solicitud para editar
+        startActivityForResult(intent, 2);
     }
 
 
@@ -129,12 +126,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                // Nuevo videojuego
                 Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
                 listaVideojuegos.add(nuevoVideojuego);
                 adapter.notifyItemInserted(listaVideojuegos.size() - 1);
             } else if (requestCode == 2) {
-                // Videojuego editado
                 int position = data.getIntExtra("position", -1);
                 if (position >= 0) {
                     Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");

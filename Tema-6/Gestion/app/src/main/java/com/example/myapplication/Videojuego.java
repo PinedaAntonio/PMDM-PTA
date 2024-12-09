@@ -4,15 +4,16 @@ import java.io.Serializable;
 
 public class Videojuego implements Serializable {
     private static final long serialVersionUID = 1L;
-    public String nombre;
-    public String descripcion;
-    public int portadaResId;
-    public boolean jugado;
-    public float valoracion;
-    public String web;
-    public String telefono;
+    private String nombre;
+    private String descripcion;
+    private int portadaResId;
+    private boolean jugado;
+    private float valoracion;
+    private String web;
+    private String telefono;
+    private String fechaLanzamiento; // Nuevo atributo
 
-    public Videojuego(String nombre, String descripcion, int portadaResId, boolean jugado, float valoracion, String web, String telefono) {
+    public Videojuego(String nombre, String descripcion, int portadaResId, boolean jugado, float valoracion, String web, String telefono, String fechaLanzamiento) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.portadaResId = portadaResId;
@@ -20,9 +21,9 @@ public class Videojuego implements Serializable {
         this.valoracion = valoracion;
         this.web = web;
         this.telefono = telefono;
+        this.fechaLanzamiento = fechaLanzamiento;
     }
 
-    // Getters y setters
     public String getNombre() { return nombre; }
     public String getDescripcion() { return descripcion; }
     public int getPortadaResId() { return portadaResId; }
@@ -57,5 +58,12 @@ public class Videojuego implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+    public String getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(String fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
     }
 }

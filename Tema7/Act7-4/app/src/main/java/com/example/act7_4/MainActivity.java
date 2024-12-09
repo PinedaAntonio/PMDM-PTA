@@ -2,6 +2,7 @@ package com.example.act7_4;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,19 +33,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast toast = Toast.makeText(getApplicationContext(), "SE HA PULSADO PRIMERO", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
                 toast.show();
             }
         });
         builder.setNegativeButton("SEGUNDO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Toast toast = Toast.makeText(getApplicationContext(), "SE HA PULSADO SEGUNDO", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }
         });
         builder.setNeutralButton("TERCERO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Toast toast = Toast.makeText(getApplicationContext(), "SE HA PULSADO TERCERO", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }
         });
         AlertDialog dialogo = builder.create();
