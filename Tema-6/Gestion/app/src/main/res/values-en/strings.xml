@@ -21,4 +21,7 @@
     <string name="voice_button_description">Voice recognition button</string>
     <string name="voice_prompt">Speak now to add or search for a game</string>
     <string name="image">Add image</string>
+    <string name="error">Error</string>
+    <string name="videojuego_not_found">Videogame called "%1$s" not found.</string>
+    <string name="ok">OK</string>
 </resources>

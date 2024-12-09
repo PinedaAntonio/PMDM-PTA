@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar RecyclerView y lista de videojuegos
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Crear lista de videojuegos
         listaVideojuegos = new ArrayList<>();
         listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789", "22/10/2012"));
         listaVideojuegos.add(new Videojuego("Cyberpunk 2077", "Juego de rol de acción y aventura", R.drawable.cyberpunk, false, 3.5f, "https://cyberpunk.net", "987654321", "12/07/2022"));
@@ -50,14 +48,12 @@ public class MainActivity extends AppCompatActivity {
         original = new ArrayList<>();
         original.addAll(listaVideojuegos);
 
-        // Botón para agregar videojuegos
         Button btnAdd = findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, CreateVideojuego.class);
             startActivityForResult(intent, 1);
         });
 
-        // Botón para reconocimiento de voz
         ImageButton btnVoice = findViewById(R.id.btn_voice);
         btnVoice.setOnClickListener(v -> startVoiceRecognition());
     }
@@ -118,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage(R.string.confirm_delete)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
                     listaVideojuegos.remove(position);
+                    original.remove(position);
                     adapter.notifyItemRemoved(position);
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -181,18 +178,56 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
         } else if (command.toLowerCase().contains("lista completa")){
             adapter.updateList(original);
+        } else if (command.toLowerCase().contains("eliminar")){
+            String query = command.replace("eliminar", "").trim();
+            deleteVideojuegoByVoice(query);
+        } else if (command.contains("actualizar")) {
+            String query = command.replace("actualizar", "").trim();
+            editVideojuegoByVoice(query);
         }
     }
 
     private void searchVideojuego(String query) {
-        original.clear();
+        listaVideojuegos.clear();
+        listaVideojuegos.addAll(original);
         List<Videojuego> filteredList = new ArrayList<>();
         for (Videojuego v : listaVideojuegos) {
-            original.add(v);
             if (v.getNombre().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(v);
             }
         }
         adapter.updateList(filteredList);
+    }
+
+    private void deleteVideojuegoByVoice(String query) {
+        for (int i = 0; i < listaVideojuegos.size(); i++) {
+            Videojuego videojuego = listaVideojuegos.get(i);
+            if (query.toLowerCase().equals(videojuego.getNombre().toLowerCase())) {
+                confirmDeleteVideojuego(i);
+                return;
+            }
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(getString(R.string.videojuego_not_found, query))
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
+
+    private void editVideojuegoByVoice(String query) {
+        for (int i = 0; i < listaVideojuegos.size(); i++) {
+            Videojuego videojuego = listaVideojuegos.get(i);
+            if (query.toLowerCase().equals(videojuego.getNombre().toLowerCase())) {
+                editVideojuego(i);
+                return;
+            }
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.error)
+                .setMessage(getString(R.string.videojuego_not_found, query))
+                .setPositiveButton(R.string.ok, null)
+                .show();
     }
 }

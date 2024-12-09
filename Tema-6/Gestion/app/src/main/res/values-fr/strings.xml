@@ -21,4 +21,7 @@
     <string name="voice_button_description">Bouton de reconnaissance vocale</string>
     <string name="voice_prompt">Parlez maintenant pour ajouter ou rechercher un jeu</string>
     <string name="image">Ajouter une image</string>
+    <string name="error">Error</string>
+    <string name="videojuego_not_found">Aucun jeu vidéo portant le nom « %1$s » n\'a été trouvé..</string>
+    <string name="ok">OK</string>
 </resources>

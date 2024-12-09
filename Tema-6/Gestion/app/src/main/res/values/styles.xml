@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="a">
+    <!-- Estilo para los botones -->
+    <style name="ButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/on_primary</item>
+    </style>
 
+    <!-- Estilo para los textos principales -->
+    <style name="TextPrimary" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Estilo para los textos secundarios -->
+    <style name="TextSecondary" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <!-- Estilo para la barra de navegación y encabezados -->
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/primary_variant</item>
+        <item name="android:titleTextColor">@color/on_primary</item>
+        <item name="android:subtitleTextColor">@color/on_primary</item>
     </style>
 </resources>
