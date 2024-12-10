@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/edit_videojuego"
-        android:title="Editar" />
+        android:title="@string/edit_video_game" />
     <item android:id="@+id/delete_videojuego"
-        android:title="Eliminar" />
+        android:title="@string/delete_video_game" />
 </menu>

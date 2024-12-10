@@ -24,4 +24,6 @@
     <string name="error">Error</string>
     <string name="videojuego_not_found">No se encontró ningún videojuego con el nombre "%1$s".</string>
     <string name="ok">OK</string>
+    <string name="sort_name">Ordenar por nombre</string>
+    <string name="sort_val">Ordenar por valoración</string>
 </resources>
