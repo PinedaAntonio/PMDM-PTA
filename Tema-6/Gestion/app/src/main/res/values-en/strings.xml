@@ -24,4 +24,6 @@
     <string name="error">Error</string>
     <string name="videojuego_not_found">Videogame called "%1$s" not found.</string>
     <string name="ok">OK</string>
+    <string name="sort_name">Order by namr</string>
+    <string name="sort_val">Order by rating</string>
 </resources>
