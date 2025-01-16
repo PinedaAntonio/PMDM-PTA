@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:background="#F0F0F0"
-    android:padding="8dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7c99c4">
 
     <ImageView
         android:id="@+id/imagenlista"
         android:layout_width="110dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:contentDescription="Descripción del contenido de la imagen"
-        android:src="@android:drawable/ic_menu_gallery" />
+        android:contentDescription="Descripcion del contenido de la imagen"
+        android:src="@android:drawable/ic_menu_gallery">
+    </ImageView>
 
     <TextView
-        android:id="@+id/textotitulo"
+        android:id="@+id/textoTitulo"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"
+        android:layout_height="100dp"
         android:textSize="20dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="#293444"
-        android:text="Título del elemento" />
+        android:textColor="#293444"/>
+
 </LinearLayout>

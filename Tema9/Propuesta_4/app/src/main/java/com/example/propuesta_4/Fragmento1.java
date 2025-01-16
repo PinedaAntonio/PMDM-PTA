@@ -1,6 +1,5 @@
 package com.example.propuesta_4;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,20 +13,18 @@ import androidx.fragment.app.ListFragment;
 
 public class Fragmento1 extends ListFragment {
 
-    Callbacks mCallbacks;
+    private Callbacks mCallbacks=CallbacksVacios;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        setListAdapter(new Adaptador(requireActivity(), R.layout.layout_listado, Contenido.ENT_LISTA) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setListAdapter(new Adaptador(getActivity(), R.layout.layout_listado, Contenido.ENT_LISTA) {
             @Override
             public void onEntrada(Object entrada, View view) {
-                TextView texto_superior_entrada = view.findViewById(R.id.textotitulo);
+                TextView texto_superior_entrada = (TextView) view.findViewById(R.id.textoTitulo);
                 texto_superior_entrada.setText(((Contenido.Lista_entrada) entrada).textoEncima);
-
-                ImageView imagen_entrada = view.findViewById(R.id.imagenlista);
-                imagen_entrada.setImageResource(((Contenido.Lista_entrada) entrada).idImagen);
+                ImageView imagen_emtrada = (ImageView) view.findViewById(R.id.imagenlista);
+                imagen_emtrada.setImageResource(((Contenido.Lista_entrada) entrada).idImagen);
             }
         });
     }
@@ -36,28 +33,25 @@ public class Fragmento1 extends ListFragment {
         public void onEntradaSeleccionada(String id);
     }
 
-    private static Callbacks CallbacksVacios = new Callbacks(){
+    private static Callbacks CallbacksVacios = new Callbacks() {
         @Override
         public void onEntradaSeleccionada(String id) {
 
         }
-
     };
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = CallbacksVacios;
-    }
 
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
-        mCallbacks = (Callbacks) activity;
+        mCallbacks=(Callbacks) activity;
     }
 
-    public Fragmento1(){
+    public Fragmento1(){ }
 
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks=CallbacksVacios;
     }
 
     @Override
@@ -65,4 +59,7 @@ public class Fragmento1 extends ListFragment {
         super.onListItemClick(l, v, position, id);
         mCallbacks.onEntradaSeleccionada(Contenido.ENT_LISTA.get(position).id);
     }
+
+
+
 }

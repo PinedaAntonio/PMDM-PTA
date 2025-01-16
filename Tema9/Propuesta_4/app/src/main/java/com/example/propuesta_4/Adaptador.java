@@ -47,5 +47,4 @@ public abstract class Adaptador extends BaseAdapter {
 
     public abstract void onEntrada (Object entrada, View view);
 
-
 }

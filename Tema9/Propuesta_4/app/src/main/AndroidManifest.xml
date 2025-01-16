@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Fragmento2"
+            android:label="@string/app_name"
+            android:parentActivityName=".Actividad">
+        </activity>
+
     </application>
 
 </manifest>
