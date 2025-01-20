@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7c99c4"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textoTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:paddingBottom="8dp"
+        android:textColor="#FFFFFF"/>
+
+    <ImageView
+        android:id="@+id/imagen"
+        android:layout_width="220dp"
+        android:layout_height="160dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Imagen de portada del videojuego"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/textocontenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:paddingTop="8dp"/>
+
+</LinearLayout>

@@ -147,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
+            if (requestCode == 1) { // Nuevo videojuego
                 Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
                 listaVideojuegos.add(nuevoVideojuego);
                 original.add(nuevoVideojuego);
                 adapter.notifyItemInserted(listaVideojuegos.size() - 1);
-            } else if (requestCode == 2) {
+            } else if (requestCode == 2) { // Editar videojuego
                 int position = data.getIntExtra("position", -1);
                 if (position >= 0) {
                     Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");
@@ -230,4 +230,30 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.ok, null)
                 .show();
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Guarda ambas listas
+        outState.putSerializable("listaVideojuegos", new ArrayList<>(listaVideojuegos));
+        outState.putSerializable("original", new ArrayList<>(original));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            // Restaura las listas
+            listaVideojuegos.clear();
+            listaVideojuegos.addAll((List<Videojuego>) savedInstanceState.getSerializable("listaVideojuegos"));
+
+            original.clear();
+            original.addAll((List<Videojuego>) savedInstanceState.getSerializable("original"));
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }
