@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="#7c99c4">
+    android:background="#CFFDCA">
 
     <ImageView
         android:id="@+id/imagenlista"
@@ -27,14 +27,14 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/textoDescripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
-            android:textColor="#D0D0D0"/>
+            android:textColor="#000000"/>
 
     </LinearLayout>
 

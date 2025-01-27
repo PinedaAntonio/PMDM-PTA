@@ -1,17 +1,16 @@
 package com.example.responsivegestion;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Contenido {
 
-    public static ArrayList<Lista_entrada> ENT_LISTA = new ArrayList<>();
-    public static Map<String, Lista_entrada> ENT_LISTA_HASHMAP = new HashMap<>();
+    public static ArrayList<Lista_entrada> ENT_LISTA = new ArrayList<Lista_entrada>();
 
-    public static class Lista_entrada {
+    public static Map<String, Lista_entrada> ENT_LISTA_HASHMAP = new HashMap<String, Lista_entrada>();
+
+    public static class Lista_entrada{
         public String id;
         public int idImagen;
         public String textoEncima;
@@ -23,22 +22,18 @@ public class Contenido {
             this.textoEncima = textoEncima;
             this.textoDebajo = textoDebajo;
         }
+
     }
 
-    private static void onEntrada(Lista_entrada entrada) {
+    static{
+        ponerEntrada(new Lista_entrada("0", R.drawable.witcher, "The witcher 3", "RPG épico de mundo abierto"));
+        ponerEntrada(new Lista_entrada("1", R.drawable.smash, "Smash Ultimate", "Juego de peleas en plataforma"));
+        ponerEntrada(new Lista_entrada("2", R.drawable.sparking, "Sparking Zero", "Juego de peleas de Dragon Ball"));
+        ponerEntrada(new Lista_entrada("3", R.drawable.cyberpunk, "Cyberpunk 2077", "Juego de rol de acción y aventura"));
+    }
+
+    private static void ponerEntrada(Lista_entrada entrada){
         ENT_LISTA.add(entrada);
         ENT_LISTA_HASHMAP.put(entrada.id, entrada);
-    }
-
-    public static void cargarVideojuegos(List<Videojuego> videojuegos) {
-        for (Videojuego videojuego : videojuegos) {
-            String id = videojuego.getNombre(); // Usamos el nombre como ID único
-            int idImagen = videojuego.getPortadaResId();
-            String textoEncima = videojuego.getNombre();
-            String textoDebajo = videojuego.getDescripcion();
-
-            Lista_entrada entrada = new Lista_entrada(id, idImagen, textoEncima, textoDebajo);
-            onEntrada(entrada);
-        }
     }
 }

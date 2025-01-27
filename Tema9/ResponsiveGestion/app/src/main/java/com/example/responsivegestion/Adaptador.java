@@ -1,25 +1,33 @@
 package com.example.responsivegestion;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+public abstract class Adaptador extends BaseAdapter {
 
-public class Adaptador extends BaseAdapter {
-
-    private ArrayList<Contenido.Lista_entrada> entradas;
+    private ArrayList<?> entradas;
     private int R_layout_IdView;
     private Context contexto;
 
-    public Adaptador(Context contexto, int R_layout_IdView, ArrayList<Contenido.Lista_entrada> entradas) {
+    public Adaptador(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
+        super();
         this.contexto = contexto;
-        this.R_layout_IdView = R_layout_IdView;
         this.entradas = entradas;
+        this.R_layout_IdView = R_layout_IdView;
+    }
+
+    @Override
+    public View getView(int posicion, View view, ViewGroup pariente) {
+        if (view == null) {
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = vi.inflate(R_layout_IdView, null);
+        }
+        onEntrada (entradas.get(posicion), view);
+        return view;
     }
 
     @Override
@@ -37,27 +45,6 @@ public class Adaptador extends BaseAdapter {
         return posicion;
     }
 
-    @Override
-    public View getView(int posicion, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R_layout_IdView, null);
-        }
+    public abstract void onEntrada (Object entrada, View view);
 
-        Contenido.Lista_entrada entrada = entradas.get(posicion);
-
-        TextView titulo = convertView.findViewById(R.id.textoTitulo);
-        TextView descripcion = convertView.findViewById(R.id.textoDescripcion); // Solo para layout_listado
-        ImageView imagen = convertView.findViewById(R.id.imagenlista);
-
-        titulo.setText(entrada.textoEncima);
-        if (descripcion != null) {
-            descripcion.setText(entrada.textoDebajo);
-        }
-        if (imagen != null) {
-            imagen.setImageResource(entrada.idImagen);
-        }
-
-        return convertView;
-    }
 }
