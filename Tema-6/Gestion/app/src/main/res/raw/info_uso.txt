@@ -1,0 +1,2 @@
+Esta aplicación permite gestionar videojuegos, ordenarlos por nombre o valoración,
+agregarlos, editarlos o eliminarlos. Todos los comandos son ejecutables por voz.
