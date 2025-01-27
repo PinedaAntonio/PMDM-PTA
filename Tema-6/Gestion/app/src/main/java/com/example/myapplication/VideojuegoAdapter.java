@@ -17,10 +17,12 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
 
     private List<Videojuego> videojuegos;
     private OnItemLongClickListener longClickListener;
+    private DatabaseHelper databaseHelper;
 
-    public VideojuegoAdapter(List<Videojuego> videojuegos, OnItemLongClickListener longClickListener) {
+    public VideojuegoAdapter(List<Videojuego> videojuegos, OnItemLongClickListener longClickListener, DatabaseHelper databaseHelper) {
         this.videojuegos = videojuegos;
         this.longClickListener = longClickListener;
+        this.databaseHelper = databaseHelper;
     }
 
     @NonNull
@@ -63,10 +65,21 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
     }
 
     public void updateList(List<Videojuego> newList) {
-
         videojuegos.clear();
         videojuegos.addAll(newList);
         notifyDataSetChanged();
     }
 
+    public void removeItem(int position) {
+        Videojuego videojuego = videojuegos.get(position);
+        databaseHelper.deleteVideojuego(videojuego.getId());
+        videojuegos.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void editItem(int position, Videojuego videojuego) {
+        databaseHelper.updateVideojuego(videojuego.getId(), videojuego);
+        videojuegos.set(position, videojuego);
+        notifyItemChanged(position);
+    }
 }

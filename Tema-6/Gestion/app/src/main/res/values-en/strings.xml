@@ -26,4 +26,7 @@
     <string name="ok">OK</string>
     <string name="sort_name">Order by namr</string>
     <string name="sort_val">Order by rating</string>
+    <string name="delete_failed">Object id not found</string>
+    <string name="app_info">Show app info</string>
+    <string name="error_loading_info">Impossible to show the app info</string>
 </resources>

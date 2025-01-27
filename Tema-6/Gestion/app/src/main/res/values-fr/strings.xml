@@ -26,4 +26,7 @@
     <string name="ok">OK</string>
     <string name="sort_name">Sorter pour nom</string>
     <string name="sort_val">Sorter pour valoration</string>
+    <string name="delete_failed">L\'identifiant de l\'objet est introuvable</string>
+    <string name="app_info">Afficher les informations sur l\'application</string>
+    <string name="error_loading_info">Impossible d\'afficher les informations</string>
 </resources>

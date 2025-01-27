@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "videojuegos.db";
     private static final int DATABASE_VERSION = 1;
@@ -25,7 +25,7 @@ public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TELEFONO = "telefono";
     private static final String COLUMN_FECHA_LANZAMIENTO = "fecha_lanzamiento";
 
-    public VideojuegoDatabaseHelper(Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -50,9 +50,9 @@ public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Insertar un videojuego
-    public long insertarVideojuego(Videojuego videojuego) {
+    public long addVideojuego(Videojuego videojuego) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOMBRE, videojuego.getNombre());
         values.put(COLUMN_DESCRIPCION, videojuego.getDescripcion());
@@ -64,19 +64,21 @@ public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_FECHA_LANZAMIENTO, videojuego.getFechaLanzamiento());
 
         long id = db.insert(TABLE_VIDEOJUEGOS, null, values);
+
         db.close();
+        videojuego.setId((int) id);
+
         return id;
     }
 
-    // Obtener todos los videojuegos
-    public List<Videojuego> obtenerTodosLosVideojuegos() {
+    public List<Videojuego> getAllVideojuegos() {
         List<Videojuego> videojuegos = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_VIDEOJUEGOS, null, null, null, null, null, null);
 
-        if (cursor.moveToFirst()) {
+        Cursor cursor = db.query(TABLE_VIDEOJUEGOS, null, null, null, null, null, COLUMN_NOMBRE);
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                Videojuego videojuego = new Videojuego(
+                videojuegos.add(new Videojuego(
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPCION)),
                         cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PORTADA_RES_ID)),
@@ -85,19 +87,19 @@ public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WEB)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TELEFONO)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FECHA_LANZAMIENTO))
-                );
-                videojuegos.add(videojuego);
+                ));
             } while (cursor.moveToNext());
+            cursor.close();
         }
-        cursor.close();
+
         db.close();
         return videojuegos;
     }
 
-    // Actualizar un videojuego
-    public int actualizarVideojuego(Videojuego videojuego) {
+    public void updateVideojuego(int id, Videojuego videojuego) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
         values.put(COLUMN_NOMBRE, videojuego.getNombre());
         values.put(COLUMN_DESCRIPCION, videojuego.getDescripcion());
         values.put(COLUMN_PORTADA_RES_ID, videojuego.getPortadaResId());
@@ -107,17 +109,21 @@ public class VideojuegoDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TELEFONO, videojuego.getTelefono());
         values.put(COLUMN_FECHA_LANZAMIENTO, videojuego.getFechaLanzamiento());
 
-        int rows = db.update(TABLE_VIDEOJUEGOS, values, COLUMN_NOMBRE + "=?", new String[]{videojuego.getNombre()});
+        db.update(TABLE_VIDEOJUEGOS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
-        return rows;
     }
 
-    // Eliminar un videojuego
-    public int eliminarVideojuego(String nombre) {
+    public boolean deleteVideojuego(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int rows = db.delete(TABLE_VIDEOJUEGOS, COLUMN_NOMBRE + "=?", new String[]{nombre});
+        int result = db.delete(TABLE_VIDEOJUEGOS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
-        return rows;
+        return result > 0;
     }
-}
 
+    public void resetDatabase() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_VIDEOJUEGOS, null, null);
+        db.close();
+    }
+
+}

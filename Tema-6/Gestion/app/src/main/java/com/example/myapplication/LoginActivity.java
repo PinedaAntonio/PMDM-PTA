@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String PREFS_NAME = "LoginPrefs"; // Nombre del archivo SharedPreferences
+    private static final String KEY_LAST_USERNAME = "lastUsername"; // Clave para guardar el último usuario
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +27,10 @@ public class LoginActivity extends AppCompatActivity {
         EditText contraseña = findViewById(R.id.contraseña);
         Button loginbutton = findViewById(R.id.loginbutton);
 
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String lastUsername = preferences.getString(KEY_LAST_USERNAME, "");
+        usuario.setText(lastUsername);
+
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +38,12 @@ public class LoginActivity extends AppCompatActivity {
                 String password = contraseña.getText().toString();
 
                 if (username.equals("usuario") && password.equals("usuario")) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(KEY_LAST_USERNAME, username);
+                    editor.apply();
+
                     showCustomToast(R.string.inicio_true);
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -52,5 +66,4 @@ public class LoginActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
     }
-
 }

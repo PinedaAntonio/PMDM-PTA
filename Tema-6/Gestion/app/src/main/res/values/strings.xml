@@ -26,4 +26,7 @@
     <string name="ok">OK</string>
     <string name="sort_name">Ordenar por nombre</string>
     <string name="sort_val">Ordenar por valoración</string>
+    <string name="delete_failed">Id de objeto no encontrada</string>
+    <string name="app_info">Mostrar info aplicación</string>
+    <string name="error_loading_info">Imposible mostrar la información</string>
 </resources>

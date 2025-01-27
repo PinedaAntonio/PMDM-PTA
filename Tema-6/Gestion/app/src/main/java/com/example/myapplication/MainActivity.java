@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,26 +30,23 @@ public class MainActivity extends AppCompatActivity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 100;
     private int selectedItemPosition;
     private List<Videojuego> original;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseHelper = new DatabaseHelper(this);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        listaVideojuegos = new ArrayList<>();
-        listaVideojuegos.add(new Videojuego("The Witcher 3", "RPG épico de mundo abierto", R.drawable.witcher, true, 4.5f, "https://thewitcher.com", "123456789", "22/10/2012"));
-        listaVideojuegos.add(new Videojuego("Cyberpunk 2077", "Juego de rol de acción y aventura", R.drawable.cyberpunk, false, 3.5f, "https://cyberpunk.net", "987654321", "12/07/2022"));
-        listaVideojuegos.add(new Videojuego("Smash Ultimate", "Juego de peleas en plataforma", R.drawable.smash, true, 4.5f, "https://smashultimate", "627162399", "14/03/2018"));
-        listaVideojuegos.add(new Videojuego("Sparking Zero", "Juego de peleas de Dragon Ball", R.drawable.sparking, true, 4f, "https://cyberpunk.net", "637253126", "02/08/2024"));
-
-        adapter = new VideojuegoAdapter(listaVideojuegos, this::onItemLongClick);
+        listaVideojuegos = databaseHelper.getAllVideojuegos();
+        adapter = new VideojuegoAdapter(listaVideojuegos, this::onItemLongClick, databaseHelper);
         recyclerView.setAdapter(adapter);
 
-        original = new ArrayList<>();
-        original.addAll(listaVideojuegos);
+        original = new ArrayList<>(listaVideojuegos);
 
         Button btnAdd = findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(v -> {
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btnVoice = findViewById(R.id.btn_voice);
         btnVoice.setOnClickListener(v -> startVoiceRecognition());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemId == R.id.create_videojuego) {
             Intent intent = new Intent(this, CreateVideojuego.class);
             startActivityForResult(intent, 1);
+            return true;
+        } else if (item.getItemId() == R.id.app_info) {
+            mostrarInformacionApp();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -108,65 +112,72 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
+    private void mostrarInformacionApp() {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.info_uso);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+            reader.close();
+        } catch (Exception e) {
+            stringBuilder.append(getString(R.string.error_loading_info));
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.app_info)
+                .setMessage(stringBuilder.toString())
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
+
     private void confirmDeleteVideojuego(int position) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.delete_video_game)
                 .setMessage(R.string.confirm_delete)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    listaVideojuegos.remove(position);
-                    original.remove(position);
-                    adapter.notifyItemRemoved(position);
+                    Videojuego videojuegoToDelete = listaVideojuegos.get(position);
+
+                    boolean isDeleted = databaseHelper.deleteVideojuego(videojuegoToDelete.getId());
+
+                    if (isDeleted) {
+                        listaVideojuegos.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    } else {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(R.string.error)
+                                .setMessage(R.string.delete_failed)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
+
+
     private void editVideojuego(int position) {
         Videojuego videojuego = listaVideojuegos.get(position);
 
         Intent intent = new Intent(this, CreateVideojuego.class);
-
         intent.putExtra("videojuego", videojuego);
         intent.putExtra("position", position);
-
         intent.putExtra("portadaResId", videojuego.getPortadaResId());
 
         startActivityForResult(intent, 2);
     }
 
+
+
     private void startVoiceRecognition() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault()); // Usar el idioma del sistema
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt));
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) { // Nuevo videojuego
-                Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
-                listaVideojuegos.add(nuevoVideojuego);
-                original.add(nuevoVideojuego);
-                adapter.notifyItemInserted(listaVideojuegos.size() - 1);
-            } else if (requestCode == 2) { // Editar videojuego
-                int position = data.getIntExtra("position", -1);
-                if (position >= 0) {
-                    Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");
-                    listaVideojuegos.set(position, videojuegoEditado);
-                    original.set(position, videojuegoEditado);
-                    adapter.notifyItemChanged(position);
-                }
-            } else if (requestCode == VOICE_RECOGNITION_REQUEST_CODE) {
-                ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (matches != null && !matches.isEmpty()) {
-                    processVoiceCommand(matches.get(0));
-                }
-            }
-        }
     }
 
     private void processVoiceCommand(String command) {
@@ -177,7 +188,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CreateVideojuego.class);
             startActivityForResult(intent, 1);
         } else if (command.toLowerCase().contains("lista completa")){
-            adapter.updateList(original);
+            listaVideojuegos.clear();
+            listaVideojuegos.addAll(databaseHelper.getAllVideojuegos());
+            adapter.updateList(listaVideojuegos);
         } else if (command.toLowerCase().contains("eliminar")){
             String query = command.replace("eliminar", "").trim();
             deleteVideojuegoByVoice(query);
@@ -186,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             editVideojuegoByVoice(query);
         }
     }
+
 
     private void searchVideojuego(String query) {
         listaVideojuegos.clear();
@@ -232,10 +246,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) { // New game
+                Videojuego nuevoVideojuego = (Videojuego) data.getSerializableExtra("videojuego");
+                long id = databaseHelper.addVideojuego(nuevoVideojuego);
+                nuevoVideojuego.setId((int) id);
+                listaVideojuegos.add(nuevoVideojuego);
+                original.add(nuevoVideojuego);
+                adapter.notifyItemInserted(listaVideojuegos.size() - 1);
+            } else if (requestCode == 2) { // Edit game
+                int position = data.getIntExtra("position", -1);
+                if (position >= 0) {
+                    Videojuego videojuegoEditado = (Videojuego) data.getSerializableExtra("videojuego");
+                    adapter.editItem(position, videojuegoEditado);
+                }
+            } else if (requestCode == VOICE_RECOGNITION_REQUEST_CODE) {
+                ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if (matches != null && !matches.isEmpty()) {
+                    processVoiceCommand(matches.get(0));
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // Guarda ambas listas
         outState.putSerializable("listaVideojuegos", new ArrayList<>(listaVideojuegos));
         outState.putSerializable("original", new ArrayList<>(original));
     }
@@ -245,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         if (savedInstanceState != null) {
-            // Restaura las listas
             listaVideojuegos.clear();
             listaVideojuegos.addAll((List<Videojuego>) savedInstanceState.getSerializable("listaVideojuegos"));
 
@@ -255,5 +293,4 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
-
 }
