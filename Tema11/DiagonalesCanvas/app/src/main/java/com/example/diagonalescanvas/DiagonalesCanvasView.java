@@ -30,7 +30,6 @@ public class DiagonalesCanvasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // Establecer el fondo amarillo
         canvas.drawColor(Color.YELLOW);
 
         int width = getMeasuredWidth();
@@ -38,11 +37,9 @@ public class DiagonalesCanvasView extends View {
         int right = getRight();
         int bottom = getBottom();
 
-        // Dibujar diagonales
-        canvas.drawLine(0, 0, width, height, linePaint); // Diagonal de esquina superior izquierda a inferior derecha
-        canvas.drawLine(0, height, width, 0, linePaint); // Diagonal de esquina inferior izquierda a superior derecha
+        canvas.drawLine(0, 0, width, height, linePaint);
+        canvas.drawLine(0, height, width, 0, linePaint);
 
-        // Dibujar texto en el centro arriba
         canvas.drawText("Width: " + width + " Height: " + height + " Right: " + right + " Bottom: " + bottom, width / 2, 30 * scaledDensity, textPaint);
     }
 }
