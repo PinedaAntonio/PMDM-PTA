@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "LoginPrefs"; // Nombre del archivo SharedPreferences
     private static final String KEY_LAST_USERNAME = "lastUsername"; // Clave para guardar el último usuario
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.mariobros);
+        mediaPlayer.start();
 
         EditText usuario = findViewById(R.id.usuario);
         EditText contraseña = findViewById(R.id.contraseña);
@@ -43,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.apply();
 
                     showCustomToast(R.string.inicio_true);
-
+                    mediaPlayer.stop();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -65,5 +70,14 @@ public class LoginActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
