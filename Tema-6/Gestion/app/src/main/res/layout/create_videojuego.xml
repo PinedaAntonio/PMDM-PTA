@@ -3,77 +3,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/imgPortada"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp" />
-
-    <EditText
-        android:id="@+id/editNombre"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/nombre_v" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/background">
 
-    <EditText
-        android:id="@+id/editDescripcion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/desc" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    <RadioButton
-        android:id="@+id/jugado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/jugado" />
+            <ImageView
+                android:id="@+id/imgPortada"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="8dp" />
 
-    <EditText
-        android:id="@+id/editUrl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/url" />
+            <Button
+                android:id="@+id/btnTomarFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tomar Foto" />
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/editTelefono"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/tel" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date"
-        android:textSize="16sp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp" />
+        <EditText
+            android:id="@+id/editNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nombre_v" />
 
+        <EditText
+            android:id="@+id/editDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/desc" />
 
+        <RadioButton
+            android:id="@+id/jugado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/jugado" />
 
-    <DatePicker
-        android:id="@+id/editFechaLanzamiento"
-        android:layout_width="wrap_content"
-        android:layout_height="203dp"
-        android:calendarViewShown="true" />
+        <EditText
+            android:id="@+id/editUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/url" />
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stepSize="0.5"
-        android:numStars="5" />
+        <EditText
+            android:id="@+id/editTelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tel" />
 
-    <Button
-        android:id="@+id/btnCrear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_videojuego" />
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <DatePicker
+            android:id="@+id/editFechaLanzamiento"
+            android:layout_width="wrap_content"
+            android:layout_height="203dp"
+            android:calendarViewShown="true" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="0.5"
+            android:numStars="5" />
+
+        <Button
+            android:id="@+id/btnCrear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_videojuego" />
+
+    </LinearLayout>
 </ScrollView>

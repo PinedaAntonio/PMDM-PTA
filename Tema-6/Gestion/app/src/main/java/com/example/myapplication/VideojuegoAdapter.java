@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,20 @@ public class VideojuegoAdapter extends RecyclerView.Adapter<VideojuegoAdapter.Vi
 
         holder.tvNombre.setText(videojuego.getNombre());
         holder.tvDescripcion.setText(videojuego.getDescripcion());
-        holder.imgPortada.setImageResource(videojuego.getPortadaResId());
+
+        if (videojuego.getPortadaPath() != null) {
+            holder.imgPortada.setImageURI(Uri.parse(videojuego.getPortadaPath())); // Imagen de la cámara
+        } else {
+            holder.imgPortada.setImageResource(videojuego.getPortadaResId()); // Imagen predeterminada
+        }
 
         holder.itemView.setOnLongClickListener(v -> {
             longClickListener.onItemLongClick(holder.getAdapterPosition());
             return true;
         });
     }
+
+
 
     @Override
     public int getItemCount() {
