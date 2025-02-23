@@ -42,7 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button searchButton, toggleMapButton;
     private boolean isSatellite = false;
     private LatLng currentLocation;
-    private final String API_KEY = "TU_API_KEY_AQUÍ";  // Asegúrate de que sea correcta
+    private final String API_KEY = "TU_API_KEY_AQUÍ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
 
-        mMap.setMyLocationEnabled(true); // Activa el botón de ubicación en el mapa
+        mMap.setMyLocationEnabled(true);
 
         Task<Location> task = fusedLocationClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mMap.clear(); // Borra marcadores anteriores
+                        mMap.clear();
 
                         try {
                             JSONArray results = response.getJSONArray("results");
