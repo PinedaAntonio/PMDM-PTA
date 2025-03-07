@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,20 +5,18 @@
     android:background="#222222"
     tools:context=".GameActivity">
 
-    <!-- Suelo con textura del tileset -->
+    <!-- Suelo -->
     <ImageView
         android:id="@+id/ground"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/temple_ground"
         android:layout_alignParentBottom="true"/>
-
 
     <!-- Sprite del aventurero -->
     <ImageView
         android:id="@+id/adventurer_sprite"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/ground"
         android:src="@drawable/adventurer_idle"

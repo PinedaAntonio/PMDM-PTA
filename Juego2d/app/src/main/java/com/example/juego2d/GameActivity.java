@@ -2,10 +2,9 @@ package com.example.juego2d;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,18 +16,20 @@ public class GameActivity extends AppCompatActivity {
     private Handler handler = new Handler();
 
     private Bitmap spriteSheet;
-    private ImageView groundImage;
     private int frameIndex = 0;
     private int frameWidth;
     private int frameHeight;
     private int frameCount;
 
-    private static final int FRAME_DURATION = 100; // Tiempo entre frames en ms
-    private static final int JUMP_HEIGHT = 200; // Altura del salto
-    private static final int MOVE_DISTANCE = 50; // Distancia por pulsación
+    private static final int FRAME_DURATION = 100;
+    private static final int MOVE_DISTANCE = 10;
+    private static final int JUMP_HEIGHT = 200;
+    private static final int GRAVITY = 10;
 
     private boolean isJumping = false;
-    private float originalY; // Para controlar el salto
+    private boolean isMovingRight = false;
+    private boolean isMovingLeft = false;
+    private float originalY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
 
         // Referencias
         adventurerSprite = findViewById(R.id.adventurer_sprite);
-        originalY = adventurerSprite.getY(); // Guardar posición inicial
+        originalY = adventurerSprite.getY();
 
         // Botones de control
         Button btnRight = findViewById(R.id.btn_right);
@@ -48,17 +49,27 @@ public class GameActivity extends AppCompatActivity {
         loadSpriteSheet(R.drawable.adventurer_idle);
         startAnimation();
 
-        // Referencia al suelo
-        groundImage = findViewById(R.id.ground);
+        // Movimiento continuo derecha
+        btnRight.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                moveRight();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                isMovingRight = false;
+                setIdleAnimation();
+            }
+            return true;
+        });
 
-        // Aplicar textura repetitiva
-        applyRepeatingTexture();
-
-        // Movimiento derecha
-        btnRight.setOnClickListener(v -> moveRight());
-
-        // Movimiento izquierda
-        btnLeft.setOnClickListener(v -> moveLeft());
+        // Movimiento continuo izquierda
+        btnLeft.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                moveLeft();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                isMovingLeft = false;
+                setIdleAnimation();
+            }
+            return true;
+        });
 
         // Saltar
         btnJump.setOnClickListener(v -> jump());
@@ -67,14 +78,13 @@ public class GameActivity extends AppCompatActivity {
     // Cargar el spritesheet dinámicamente
     private void loadSpriteSheet(int spriteRes) {
         spriteSheet = BitmapFactory.decodeResource(getResources(), spriteRes);
-
         int sheetWidth = spriteSheet.getWidth();
         frameHeight = spriteSheet.getHeight();
         frameCount = sheetWidth / frameHeight;
         frameWidth = sheetWidth / frameCount;
     }
 
-    // Animar el sprite cambiando los frames
+    // Animar el sprite
     private void startAnimation() {
         handler.postDelayed(new Runnable() {
             @Override
@@ -91,32 +101,77 @@ public class GameActivity extends AppCompatActivity {
         frameIndex = (frameIndex + 1) % frameCount;
     }
 
+    // Movimiento continuo
+    private void moveCharacter() {
+        new Thread(() -> {
+            while (isMovingRight || isMovingLeft) {
+                runOnUiThread(() -> {
+                    if (isMovingRight) {
+                        adventurerSprite.setX(adventurerSprite.getX() + MOVE_DISTANCE);
+                    }
+                    if (isMovingLeft) {
+                        adventurerSprite.setX(adventurerSprite.getX() - MOVE_DISTANCE);
+                    }
+                });
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     // Mover a la derecha
     private void moveRight() {
-        adventurerSprite.setX(adventurerSprite.getX() + MOVE_DISTANCE);
+        adventurerSprite.setScaleX(1f); // Mirar a la derecha
+        isMovingRight = true;
         setRunningAnimation();
+        moveCharacter();
     }
 
     // Mover a la izquierda
     private void moveLeft() {
-        adventurerSprite.setX(adventurerSprite.getX() - MOVE_DISTANCE);
+        adventurerSprite.setScaleX(-1f); // Mirar a la izquierda
+        isMovingLeft = true;
         setRunningAnimation();
+        moveCharacter();
     }
 
-    // Saltar
+    // Saltar con gravedad
     private void jump() {
         if (!isJumping) {
             isJumping = true;
             setJumpingAnimation();
 
-            // Subir
-            adventurerSprite.animate().y(originalY - JUMP_HEIGHT).setDuration(300).withEndAction(() -> {
-                // Bajar
-                adventurerSprite.animate().y(originalY).setDuration(300).withEndAction(() -> {
-                    setIdleAnimation();
+            new Thread(() -> {
+                for (int i = 0; i < JUMP_HEIGHT / GRAVITY; i++) {
+                    runOnUiThread(() -> adventurerSprite.setY(adventurerSprite.getY() - GRAVITY));
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (int i = 0; i < JUMP_HEIGHT / GRAVITY; i++) {
+                    runOnUiThread(() -> adventurerSprite.setY(adventurerSprite.getY() + GRAVITY));
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                runOnUiThread(() -> {
+                    if(isMovingRight || isMovingLeft){
+                        setRunningAnimation();
+                    }else{
+                        setIdleAnimation();
+                    }
                     isJumping = false;
                 });
-            });
+            }).start();
         }
     }
 
@@ -136,17 +191,5 @@ public class GameActivity extends AppCompatActivity {
     private void setJumpingAnimation() {
         loadSpriteSheet(R.drawable.adventurer_flying);
         frameIndex = 0;
-    }
-
-    private void applyRepeatingTexture() {
-        // Cargar el bitmap del suelo
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.temple_ground);
-
-        // Crear un BitmapDrawable y habilitar la repetición
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-        bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-
-        // Aplicar al ImageView
-        groundImage.setImageDrawable(bitmapDrawable);
     }
 }
