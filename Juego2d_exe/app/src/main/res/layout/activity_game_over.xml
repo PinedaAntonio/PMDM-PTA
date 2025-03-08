@@ -13,14 +13,40 @@
         android:textStyle="bold"
         android:textColor="@android:color/holo_red_dark"
         android:fontFamily="@font/minecraft"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="50dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <!-- Puntuación actual -->
+    <TextView
+        android:id="@+id/text_last_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puntuación: 0"
+        android:textSize="25sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/text_game_over"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Récord -->
+    <TextView
+        android:id="@+id/text_high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Récord: 0"
+        android:textSize="25sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/text_last_score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
     <!-- Contenedor de botones centrado -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/text_high_score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <!-- Botón de Reiniciar -->
@@ -30,11 +56,9 @@
             android:layout_height="wrap_content"
             android:text="Reintentar"
             android:textSize="20sp"
-            android:background="@drawable/button_style"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:backgroundTint="#8B5A2B"
             android:textColor="@android:color/white"
             android:layout_marginEnd="20dp"/>
-
 
         <!-- Botón de Salir -->
         <Button
@@ -43,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="Salir"
             android:textSize="20sp"
-            android:background="@drawable/button_style"
+            android:backgroundTint="#8B5A2B"
             android:textColor="@android:color/white"/>
     </LinearLayout>
 </RelativeLayout>

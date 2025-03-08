@@ -454,8 +454,10 @@ public class GameActivity extends AppCompatActivity {
 
             // Ir a la pantalla de Game Over
             Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
+            intent.putExtra("score", score); // Enviar puntuación
             startActivity(intent);
-            finish(); // Cerrar la actividad actual para evitar volver atrás
+            finish();
+
         });
     }
 
