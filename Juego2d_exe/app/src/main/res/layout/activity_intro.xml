@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Comenzar"
         android:textSize="20sp"
-        android:background="@drawable/button_style"
+        android:backgroundTint="#8B5A2B"
         android:textColor="@android:color/white"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

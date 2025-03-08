@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
         // Restablecer variables globales al reiniciar
         isGameOver = false;
         isJumping = false;
-        obstacles.clear(); // Eliminar obstáculos antiguos
+        obstacles.clear();
 
         // Asegurar que el contenedor no tenga obstáculos previos
         ViewGroup gameContainer = findViewById(R.id.game_container);
@@ -130,9 +130,12 @@ public class GameActivity extends AppCompatActivity {
                     float screenWidth = getResources().getDisplayMetrics().widthPixels;
                     float characterWidth = adventurerSprite.getWidth();
 
+                    //Movimiento a la derecha
                     if (isMovingRight && newX + MOVE_DISTANCE + characterWidth <= screenWidth) {
                         adventurerSprite.setX(newX + MOVE_DISTANCE);
                     }
+
+                    //Movimiento a la izquierda
                     if (isMovingLeft && newX - MOVE_DISTANCE >= 0) {
                         adventurerSprite.setX(newX - MOVE_DISTANCE);
                     }
@@ -189,7 +192,7 @@ public class GameActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    if (isGameOver) return; // Verificar si el juego terminó después de cada iteración
+                    if (isGameOver) return;
                 }
 
                 // Movimiento hacia abajo
@@ -213,7 +216,7 @@ public class GameActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    if (isGameOver) return; // Verificar si el juego terminó después de cada iteración
+                    if (isGameOver) return;
                 }
 
                 runOnUiThread(() -> {
@@ -251,29 +254,27 @@ public class GameActivity extends AppCompatActivity {
         frameIndex = 0;
     }
 
-    private int maxObstaclesPerSpawn = 1; // Inicialmente 1 roca por ciclo
+    private int maxObstaclesPerSpawn = 1;
 
     private void startObstacleSpawner() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                // Ajustar la dificultad en base a la puntuación
+                maxObstaclesPerSpawn = Math.min(1 + (score / 50), 7); // Aumenta cada 50 puntos, máx. 7
+
                 // Generar obstáculos desde arriba
                 for (int i = 0; i < maxObstaclesPerSpawn; i++) {
                     spawnObstacle();
                 }
 
-                // Cada cierto tiempo, generar un obstáculo lateral
-                if (random.nextInt(3) == 0) { // 1 de cada 3 ciclos genera un obstáculo lateral
+                // 1 de cada 3 ciclos genera un obstáculo lateral
+                if (random.nextInt(3) == 0) {
                     spawnSideObstacle();
                 }
 
-                // Aumentar la dificultad con el tiempo
-                if (maxObstaclesPerSpawn < 5) {
-                    maxObstaclesPerSpawn++;
-                }
-
-                // Disminuir el tiempo de aparición (mínimo 1000ms)
-                spawnRate = Math.max(1000, spawnRate - 200);
+                // Reducir el tiempo de aparición de obstáculos basado en la puntuación
+                spawnRate = Math.max(1000, 3000 - (score * 10));
 
                 // Repetir el spawn
                 handler.postDelayed(this, spawnRate);
@@ -282,10 +283,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-
     private void spawnObstacle() {
         runOnUiThread(() -> {
-            // Obtener el contenedor del juego donde se agregarán los obstáculos
             ViewGroup gameContainer = findViewById(R.id.game_container);
 
             if (gameContainer != null) {
@@ -293,10 +292,10 @@ public class GameActivity extends AppCompatActivity {
                 obstacle.setImageResource(R.drawable.obstacle);
 
                 // Establecer tamaño del obstáculo
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(80, 80); // Ajusta el tamaño si es necesario
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(80, 80);
                 obstacle.setLayoutParams(params);
 
-                // Posicionar el obstáculo en la parte superior de la pantalla, con X aleatoria
+                // Posición del obstáculo en la parte superior de la pantalla, con X aleatoria
                 obstacle.setX(random.nextInt(getResources().getDisplayMetrics().widthPixels - 80));
                 obstacle.setY(0);
 
@@ -304,7 +303,7 @@ public class GameActivity extends AppCompatActivity {
                 gameContainer.addView(obstacle);
                 obstacles.add(obstacle);
 
-                // Mover el obstáculo hacia abajo
+                // Mover el obstáculo
                 moveObstacle(obstacle);
             }
         });
@@ -316,23 +315,23 @@ public class GameActivity extends AppCompatActivity {
 
             if (gameContainer != null) {
                 ImageView sideObstacle = new ImageView(this);
-                sideObstacle.setImageResource(R.drawable.side_obstacle); // Imagen del obstáculo lateral
+                sideObstacle.setImageResource(R.drawable.side_obstacle);
 
                 // Establecer tamaño del obstáculo
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(80, 80); // Reducido a 80x80 para menor colisión
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(80, 80);
                 sideObstacle.setLayoutParams(params);
 
                 // Determinar si aparece por la izquierda o la derecha
                 boolean fromLeft = random.nextBoolean();
                 if (fromLeft) {
                     sideObstacle.setX(0); // Aparece en el borde izquierdo
-                    sideObstacle.setScaleX(-1f); // Voltear el sprite
+                    sideObstacle.setScaleX(-1f);
                 } else {
                     sideObstacle.setX(getResources().getDisplayMetrics().widthPixels - 80); // Aparece en el borde derecho
-                    sideObstacle.setScaleX(1f); // Normal
+                    sideObstacle.setScaleX(1f);
                 }
 
-                // Posicionarlo un poco más bajo que el aventurero
+                // Posición del obstáculo lateral
                 sideObstacle.setY(adventurerSprite.getY() + 20);
 
                 // Agregarlo al contenedor
@@ -340,7 +339,7 @@ public class GameActivity extends AppCompatActivity {
                 obstacles.add(sideObstacle);
                 SoundEffects.playArrowSound(this);
 
-                // Animar el obstáculo a través de la pantalla
+                // Mover el obstáculo
                 moveSideObstacle(sideObstacle, fromLeft);
             }
         });
@@ -362,7 +361,7 @@ public class GameActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // Si sale de la pantalla, eliminarlo
+                    // Eliminar el obstáculo si no hay colisión una vez llegue al final
                     if (newX < -sideObstacle.getWidth() || newX > screenWidth) {
                         ViewGroup parent = (ViewGroup) sideObstacle.getParent();
                         if (parent != null) {
@@ -372,12 +371,12 @@ public class GameActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // Mover el obstáculo en la dirección correcta
+                    // Mover el obstáculo
                     sideObstacle.setX(newX);
                 });
 
                 try {
-                    Thread.sleep(30); // Control de velocidad del movimiento
+                    Thread.sleep(30); // Sleep para controlar la velocidad del movimiento
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -405,7 +404,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
 
-            // Remover el obstáculo si no hay colisión
+            // Eliminar el obstáculo si no hay colisión una vez llegue al final
             runOnUiThread(() -> {
                 ViewGroup parent = (ViewGroup) obstacle.getParent();
                 if (parent != null) {
@@ -418,9 +417,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean checkCollision(ImageView obj1, ImageView obj2) {
-        float obj1Left = obj1.getX() + 10; // Reducir 10px en los lados
+        float obj1Left = obj1.getX() + 10;
         float obj1Right = obj1.getX() + obj1.getWidth() - 10;
-        float obj1Top = obj1.getY() + 10; // Reducir 10px en la parte superior
+        float obj1Top = obj1.getY() + 10;
         float obj1Bottom = obj1.getY() + obj1.getHeight() - 10;
 
         float obj2Left = obj2.getX() + 10;
@@ -435,7 +434,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void gameOver() {
-        if (isGameOver) return; // Evitar llamadas repetidas
+        if (isGameOver) return;
         isGameOver = true;
         isJumping = false; // Detener animaciones en curso
 
@@ -468,11 +467,13 @@ public class GameActivity extends AppCompatActivity {
                 if (!isGameOver) {
                     score++;
                     tvScore.setText("Puntos: " + score);
-                    handler.postDelayed(this, 100); // Aumenta puntos cada segundo
+                    handler.postDelayed(this, 100); // Aumenta puntos cada 0.1 segundo
                 }
             }
         }, 1000);
     }
+
+    //Métodos para el sonido
 
     @Override
     protected void onPause() {

@@ -14,7 +14,7 @@
         android:textColor="@android:color/holo_red_dark"
         android:fontFamily="@font/minecraft"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="30dp"/>
 
     <!-- Puntuación actual -->
     <TextView
@@ -26,7 +26,7 @@
         android:textColor="@android:color/white"
         android:layout_below="@id/text_game_over"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="15dp"/>
 
     <!-- Récord -->
     <TextView
@@ -40,34 +40,44 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
-    <!-- Contenedor de botones centrado -->
+    <!-- Contenedor de botones y QR -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_high_score"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <!-- Botón de Reiniciar -->
         <Button
             android:id="@+id/btn_restart"
-            android:layout_width="200dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Reintentar"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:backgroundTint="#8B5A2B"
             android:textColor="@android:color/white"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="10dp"/>
+
+        <!-- Imagen del QR -->
+        <ImageView
+            android:id="@+id/qrImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="10dp"/>
 
         <!-- Botón de Salir -->
         <Button
             android:id="@+id/btn_exit"
-            android:layout_width="200dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Salir"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:backgroundTint="#8B5A2B"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:layout_marginStart="10dp"/>
     </LinearLayout>
+
 </RelativeLayout>

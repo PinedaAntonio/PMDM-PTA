@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 
 public class SoundEffects {
     private static MediaPlayer gameMusic;
-    private static float musicVolume = 0.15f; // Volumen predeterminado (1.0 = máximo)
+    private static float musicVolume = 0.15f; // Volumen para música
     private static float effectsVolume = 1.0f; // Volumen para efectos de sonido
 
     // Reproducir sonido de flecha con volumen ajustable

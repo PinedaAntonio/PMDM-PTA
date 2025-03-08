@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class GameOverActivity extends AppCompatActivity {
     private int lastScore;
@@ -27,32 +33,37 @@ public class GameOverActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("game_prefs", MODE_PRIVATE);
         highScore = prefs.getInt("high_score", 0);
 
-        // Guardar la nueva puntuación solo si es mayor
+        // Guardar el nuevo récord
         if (lastScore > highScore) {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("high_score", lastScore);
             editor.apply();
-            highScore = lastScore; // Actualizar el récord mostrado
+            highScore = lastScore;
         }
 
-        // Mostrar la puntuación y el récord en los TextView
+        // Mostrar la puntuación y el récord
         TextView scoreText = findViewById(R.id.text_last_score);
         TextView recordText = findViewById(R.id.text_high_score);
 
         scoreText.setText("Puntuación: " + lastScore);
         recordText.setText("Récord: " + highScore);
 
+
+        // Implementación del qr
+        ImageView qrImageView = findViewById(R.id.qrImageView);
+        String qrText = "Mi récord en Cave Survivor es: " + highScore + " puntos"; // Texto que se muestra al escanear
+        qrImageView.setImageBitmap(generateQRCode(qrText));
         Button btnRestart = findViewById(R.id.btn_restart);
         Button btnExit = findViewById(R.id.btn_exit);
 
         btnRestart.setOnClickListener(v -> {
-            // Mostrar mensaje "Reiniciando..."
+            // Mostrar toast "Reiniciando..."
             Toast.makeText(this, "Reiniciando...", Toast.LENGTH_SHORT).show();
 
             // Reproducir sonido de inicio
             SoundEffects.playIntroSound(this);
 
-            // Retrasar el reinicio del juego 2 segundos
+            // Retrasar el reinicio del juego 2 segundos (así dejamos que se reproduzca el sonido)
             new Handler().postDelayed(() -> {
                 Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
                 startActivity(intent);
@@ -65,4 +76,15 @@ public class GameOverActivity extends AppCompatActivity {
             System.exit(0);
         });
     }
+
+    private Bitmap generateQRCode(String text) {
+        try {
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, 500, 500);
+            return new BarcodeEncoder().createBitmap(bitMatrix);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

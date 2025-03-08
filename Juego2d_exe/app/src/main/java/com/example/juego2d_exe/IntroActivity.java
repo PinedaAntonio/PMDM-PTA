@@ -22,12 +22,12 @@ public class IntroActivity extends AppCompatActivity {
             // Reproducir sonido de inicio
             SoundEffects.playIntroSound(this);
 
-            // Retrasar el inicio del juego 2 segundos (2000ms)
+            // Retrasar el inicio del juego 2 segundos
             new Handler().postDelayed(() -> {
                 Intent intent = new Intent(IntroActivity.this, GameActivity.class);
                 startActivity(intent);
                 finish(); // Cierra la pantalla de introducción
-            }, 2000); // 2000 milisegundos = 2 segundos
+            }, 2000);
         });
     }
 }
