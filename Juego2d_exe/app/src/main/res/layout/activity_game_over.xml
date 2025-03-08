@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_over">
+
+    <!-- Texto de Game Over -->
+    <TextView
+        android:id="@+id/text_game_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Over"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
+        android:fontFamily="@font/minecraft"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"/>
+
+    <!-- Contenedor de botones centrado -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <!-- Botón de Reiniciar -->
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Reintentar"
+            android:textSize="20sp"
+            android:background="@drawable/button_style"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="20dp"/>
+
+
+        <!-- Botón de Salir -->
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Salir"
+            android:textSize="20sp"
+            android:background="@drawable/button_style"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</RelativeLayout>

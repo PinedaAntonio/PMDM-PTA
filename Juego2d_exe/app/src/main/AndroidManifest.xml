@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/cave_logo"
+        android:label="Cave Survivor"
+        android:roundIcon="@mipmap/cave_logo_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Juego2d_exe"
+        tools:targetApi="35">
+
+        <!-- Pantalla de introducción -->
+        <activity
+            android:name=".IntroActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Juego2d_exe.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Pantalla principal del juego -->
+        <activity
+            android:name=".GameActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:keepScreenOn="true"
+            android:theme="@style/Theme.Juego2d_exe.NoActionBar"/>
+
+        <!-- Pantalla de Game Over -->
+        <activity
+            android:name=".GameOverActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Juego2d_exe.NoActionBar"/>
+
+    </application>
+
+</manifest>
